@@ -29,6 +29,7 @@ from backend.schemas import (
 )
 from backend.utils import strtobool
 from backend.validators import validate_model
+from backend.vendor_analysis import router as vendor_analysis_router
 
 load_dotenv()
 
@@ -91,6 +92,10 @@ def create_app() -> FastAPI:
         strtobool(os.getenv("RATE_LIMIT_ENABLED", False)),
         os.getenv("REDIS_URL"),
     )
+
+    # Include the new router
+    app.include_router(vendor_analysis_router, prefix="/api/v1")
+
     return app
 
 
